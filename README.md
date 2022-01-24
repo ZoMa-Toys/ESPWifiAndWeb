@@ -61,3 +61,9 @@ void loop() {
     client.connect(websockets_server_host, websockets_server_port, websockets_server_path);
   }
 ```
+
+## Adding to project as submodule:
+execute the following command
+```
+git submodule add git@github.com:GuBee33/ESPWifiAndWeb.git lib/WifiAndWeb
+```
