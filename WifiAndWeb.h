@@ -5,7 +5,9 @@
 #if defined (ARDUINO_ARCH_ESP8266)
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
+#include <ESPAsyncTCP.h>
 #elif defined (ESP32)
+#include <AsyncTCP.h>
 #include <WiFi.h>
 #include <ESPmDNS.h>
 #else
@@ -14,7 +16,6 @@
 #include <ArduinoWebsockets.h>
 #include <ArduinoJson.h>
 #include <WebSerial.h>
-#include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
