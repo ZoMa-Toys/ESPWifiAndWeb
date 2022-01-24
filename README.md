@@ -65,5 +65,5 @@ void loop() {
 ## Adding to project as submodule:
 execute the following command
 ```
-git submodule add git@github.com:GuBee33/ESPWifiAndWeb.git lib/WifiAndWeb
+git submodule add https://github.com/GuBee33/ESPWifiAndWeb.git lib/WifiAndWeb
 ```
