@@ -62,8 +62,30 @@ void loop() {
   }
 ```
 
+platformio.ini lib_deps:
+ESP8266:
+```
+lib_deps = 
+	bblanchon/ArduinoJson@^6.18.5
+	gilmaimon/ArduinoWebsockets@^0.5.3
+	ayushsharma82/WebSerial@^1.3.0
+	me-no-dev/ESPAsyncTCP@^1.2.2
+	me-no-dev/ESP Async WebServer@^1.2.3
+```
+ESP32:
+```
+lib_deps = 
+	bblanchon/ArduinoJson@^6.18.5
+	gilmaimon/ArduinoWebsockets@^0.5.3
+	ayushsharma82/WebSerial@^1.3.0
+	me-no-dev/AsyncTCP@^1.1.1
+	me-no-dev/ESP Async WebServer@^1.2.3
+```
+
 ## Adding to project as submodule:
 execute the following command
 ```
 git submodule add https://github.com/GuBee33/ESPWifiAndWeb.git lib/WifiAndWeb
 ```
+
+
