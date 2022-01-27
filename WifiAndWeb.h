@@ -7,9 +7,9 @@
 #include <ESP8266mDNS.h>
 #include <ESPAsyncTCP.h>
 #elif defined (ESP32)
-#include <AsyncTCP.h>
 #include <WiFi.h>
 #include <ESPmDNS.h>
+#include <AsyncTCP.h>
 #else
 #error Architecture unrecognized by this code.
 #endif
