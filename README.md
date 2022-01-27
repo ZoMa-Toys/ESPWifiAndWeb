@@ -27,6 +27,23 @@ void onDataReceived(String msg){
   // do something with the data
 }
 
+void onMessage(){
+  client.onMessage([&](WebsocketsMessage message){
+    if (message.length()<2048){
+      String msg;
+      msg=message.data();
+      debugPrint("Incoming WS msg: " + msg);
+      if (msg.indexOf("action")>-1 || msg.indexOf("Status")>-1 ){
+        Serial.println("calling function");
+        onDataReceived(msg);
+      }
+    }
+    else{
+      debugPrint("Too large message");
+    }
+  });
+}
+
 //Webserial
 void recvMsg(uint8_t *data, size_t len){
   WebSerial.println("Received Data...");
@@ -44,7 +61,8 @@ main.cpp part:
 void setup() {
   Serial.begin(115200);
   connectWifi();
-  connectWS(onDataReceived);
+  connectWS();
+  onMessage();
   createWebSerial(recvMsg);
   createOTA();
 }
@@ -58,7 +76,8 @@ void loop() {
     client.poll();
   }
   else{
-    client.connect(websockets_server_host, websockets_server_port, websockets_server_path);
+    connectWS();
+    onMessage();
   }
 ```
 

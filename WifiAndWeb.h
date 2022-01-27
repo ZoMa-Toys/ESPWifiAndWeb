@@ -113,7 +113,7 @@ void connectWifi(){
     Serial.println(THISMDNS);
 }
 
-void connectWS(void (*onDataReceived)(String msg)){
+void connectWS(){
   Serial.println("Connecting to server.");
   // try to connect to Websockets server
   bool connected = client.connect(websockets_server_host, websockets_server_port, websockets_server_path);
@@ -124,19 +124,6 @@ void connectWS(void (*onDataReceived)(String msg)){
   } else {
     Serial.println("Not Connected!");
   }
-  client.onMessage([&](WebsocketsMessage message){
-    if (message.length()<2048){
-      String msg;
-      msg=message.data();
-      debugPrint("Incoming WS msg: " + msg);
-      if (msg.indexOf("action")>-1 || msg.indexOf("Status")>-1 ){
-        onDataReceived(msg);
-      }
-    }
-    else{
-      debugPrint("Too large message");
-    }
-  });
 }
 
 
