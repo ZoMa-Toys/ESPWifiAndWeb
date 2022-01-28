@@ -61,6 +61,9 @@ StaticJsonDocument<2048>  messageJSONToSend;
 WebsocketsClient client;
 AsyncWebServer server(80);
 
+void onDataReceived(String msg);
+
+
 void debugPrint(String toprint){
     if (debug == "Serial"){
         Serial.println(toprint);
@@ -113,6 +116,23 @@ void connectWifi(){
     Serial.println(THISMDNS);
 }
 
+
+void onMessage(){
+  client.onMessage([&](WebsocketsMessage message){
+    if (message.length()<2048){
+      String msg;
+      msg=message.data();
+      debugPrint("Incoming WS msg: " + msg);
+      if (msg.indexOf("action")>-1 || msg.indexOf("Status")>-1 ){
+        onDataReceived(msg);
+      }
+    }
+    else{
+      debugPrint("Too large message");
+    }
+  });
+}
+
 void connectWS(){
   Serial.println("Connecting to server.");
   // try to connect to Websockets server
@@ -120,7 +140,8 @@ void connectWS(){
   if(connected) {
     Serial.print("Connected to ");
     Serial.println(websockets_server_host);
-    client.send(WiFi.localIP().toString() + " connected");
+    client.send("{\"connected\":\"" + WiFi.localIP().toString() + "\"}");
+    onMessage();
   } else {
     Serial.println("Not Connected!");
   }
