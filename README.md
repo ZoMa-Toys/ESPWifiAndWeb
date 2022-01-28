@@ -13,7 +13,7 @@ build_flags =
 	-D WSPORT=WEBSOCKETPORT
 	-D DBG=\"DEBUG MODE (Serial/webserial/webosket/none\"
 ```
-Webserial and websocekt callbacks:
+Webserial and websocekt callback (currently the function name and arguments is mandantory in this format):
 ```
 //Websocket:
 void onDataReceived(String msg){
@@ -27,22 +27,6 @@ void onDataReceived(String msg){
   // do something with the data
 }
 
-void onMessage(){
-  client.onMessage([&](WebsocketsMessage message){
-    if (message.length()<2048){
-      String msg;
-      msg=message.data();
-      debugPrint("Incoming WS msg: " + msg);
-      if (msg.indexOf("action")>-1 || msg.indexOf("Status")>-1 ){
-        Serial.println("calling function");
-        onDataReceived(msg);
-      }
-    }
-    else{
-      debugPrint("Too large message");
-    }
-  });
-}
 
 //Webserial
 void recvMsg(uint8_t *data, size_t len){
@@ -62,7 +46,6 @@ void setup() {
   Serial.begin(115200);
   connectWifi();
   connectWS();
-  onMessage();
   createWebSerial(recvMsg);
   createOTA();
 }
@@ -77,7 +60,6 @@ void loop() {
   }
   else{
     connectWS();
-    onMessage();
   }
 ```
 
@@ -99,6 +81,36 @@ lib_deps =
 	ayushsharma82/WebSerial@^1.3.0
 	me-no-dev/AsyncTCP@^1.1.1
 	me-no-dev/ESP Async WebServer@^1.2.3
+```
+
+Additional functions included. You can change the **debug** type with build flag too.
+To send out JSON WebSocket message, after you filled the **messageJSONToSend** is possible with the sendJSON function
+```
+void debugPrint(String toprint){
+    if (debug == "Serial"){
+        Serial.println(toprint);
+    }
+    else if (debug == "webserial"){
+        WebSerial.println(toprint);
+    }
+    else if (debug == "websocket"){
+        StaticJsonDocument<2048> tp;
+        tp["DEBUG"]=toprint;
+        String message;
+        serializeJson(tp,message);
+        client.send(message);
+    }
+}
+
+void sendJSON(){
+    String toSend = "";
+    serializeJson(messageJSONToSend,toSend);
+    messageJSONToSend.clear();
+    debugPrint("toSend: " + toSend);
+    client.send(toSend);
+    toSend = "";
+
+}
 ```
 
 ## Adding to project as submodule:
