@@ -1,6 +1,8 @@
 #ifndef WiFIAndWeb_h
 #define WiFIAndWeb_h
 
+#define DO_EXPAND(VAL)  VAL ## 1
+#define EXPAND(VAL)     DO_EXPAND(VAL)
 
 #if defined (ARDUINO_ARCH_ESP8266)
 #include <ESP8266WiFi.h>
@@ -19,34 +21,34 @@
 #include <ESPAsyncWebServer.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
-#ifndef STASSID
+
+#if !defined(STASSID) || (EXPAND(STASSID) == 1)
 #define STASSID "SOMEWIFI"
 #endif
-#ifndef STAPSK
+
+#if !defined(STAPSK) || (EXPAND(STAPSK) == 1)
 #define STAPSK  "SecretPW"
 #endif
 
-#ifndef WSHOST
+#if !defined(WSHOST) || (EXPAND(WSHOST) == 1)
 #define WSHOST "RANDOMHOST"
 #endif
 
-#ifndef WSPORT
+#if !defined(WSPORT) || (EXPAND(WSPORT) == 1)
 #define WSPORT 80
 #endif
 
-#ifndef DBG
+#if !defined(DBG) || (EXPAND(DBG) == 1)
 #define DBG ""
 #endif
 
-#ifndef WSPATH
+#if !defined(WSPATH) || (EXPAND(WSPATH) == 1)
 #define WSPATH "/ws"
 #endif
 
-#ifndef THISMDNS
+#if !defined(THISMDNS) || (EXPAND(THISMDNS) == 1)
 #define THISMDNS "ESP"
 #endif
-
-
 
 using namespace websockets;
 const char* ssid = STASSID; //Enter SSID
