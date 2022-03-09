@@ -22,31 +22,31 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
-#if !defined(STASSID) || (EXPAND(STASSID) == 1)
+#ifndef STASSID
 #define STASSID "SOMEWIFI"
 #endif
 
-#if !defined(STAPSK) || (EXPAND(STAPSK) == 1)
+#ifndef STAPSK
 #define STAPSK  "SecretPW"
 #endif
 
-#if !defined(WSHOST) || (EXPAND(WSHOST) == 1)
+#ifndef WSHOST
 #define WSHOST "RANDOMHOST"
 #endif
 
-#if !defined(WSPORT) || (EXPAND(WSPORT) == 1)
+#ifndef WSPORT
 #define WSPORT 80
 #endif
 
-#if !defined(DBG) || (EXPAND(DBG) == 1)
+#ifndef DBG
 #define DBG ""
 #endif
 
-#if !defined(WSPATH) || (EXPAND(WSPATH) == 1)
+#ifndef WSPATH
 #define WSPATH "/ws"
 #endif
 
-#if !defined(THISMDNS) || (EXPAND(THISMDNS) == 1)
+#ifndef THISMDNS
 #define THISMDNS "ESP"
 #endif
 
